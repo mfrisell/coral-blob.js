@@ -22,7 +22,8 @@
     "stats.js": "*",
     "dat-gui": "~0.5.1",
     "sketch.js": "*",
-    "normalize.css": "~3.0.3"
+    "normalize.css": "~3.0.3",
+    "threex.rendererstats": "*"
   },
   "overrides": {
     "sketch.js": {

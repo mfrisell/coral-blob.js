@@ -1,4 +1,4 @@
-var demo, renderer, stats;
+var demo, renderer, rendererStats, stats;
 
 stats = new Stats();
 
@@ -7,6 +7,14 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 
 stats.domElement.style.top = '0px';
+
+rendererStats = new THREEx.RendererStats();
+
+rendererStats.domElement.style.position = 'absolute';
+
+rendererStats.domElement.style.left = '0px';
+
+rendererStats.domElement.style.bottom = '0px';
 
 renderer = new THREE.WebGLRenderer();
 
@@ -37,13 +45,15 @@ demo = Sketch.create({
     this.mesh.rotation.x += 0.01;
     this.mesh.rotation.y += 0.02;
     renderer.render(this.scene, this.camera);
-    return stats.end();
+    stats.end();
+    return rendererStats.update(renderer);
   }
 });
 
 window.onload = function() {
   var gui;
   document.body.appendChild(stats.domElement);
+  document.body.appendChild(rendererStats.domElement);
   return gui = new dat.GUI();
 };
 
