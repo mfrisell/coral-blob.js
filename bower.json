@@ -1,0 +1,35 @@
+{
+  "name": "three-boilerplate",
+  "version": "0.0.1",
+  "authors": [
+    "Matthias De Vriendt (fauxnoir) <devriendt.matthias@gmail.com>"
+  ],
+  "description": "A simple Three.js boilerplate",
+  "keywords": [
+    "three",
+    "boilerplate"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*",
+    "stats.js": "*",
+    "dat-gui": "~0.5.1",
+    "sketch.js": "*",
+    "normalize.css": "~3.0.3"
+  },
+  "overrides": {
+    "sketch.js": {
+      "main": "bower_components/sketch.js/js/sketch.js"
+    },
+    "dat-gui": {
+      "main": "bower_components/dat-gui/build/dat.gui.js"
+    }
+  }
+}
