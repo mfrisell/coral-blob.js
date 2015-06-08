@@ -1,2 +1,2 @@
-# three-boilerplate
-A simple Three.js boilerplate
+# coral.blob.js
+Generate procedural blobs in three.js
