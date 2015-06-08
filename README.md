@@ -26,6 +26,10 @@ the *{options}* object is optional, and may contain:
 * **detail** *(integer)* The level of detail applied to the geometry. Higher detail equals more vertices.
 * **radius** *(float)* The radius of the blob geometry
 * **noiseOptions** *(object)* The options-object passed to the noise generator. Details can be found [here](https://github.com/joshforisha/fast-simplex-noise-js)
-    
+
+#Example Usage
+A usage example can be seen [here](http://codepen.io/fauxnoir/pen/vOmzJB)
+
+
 Credit goes to [joshforisha](https://github.com/joshforisha/fast-simplex-noise-js) for his JavaScript implementation of [Simplex noise](http://webstaff.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf). 
 
