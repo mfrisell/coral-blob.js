@@ -1,11 +1,18 @@
-cfg = {
-  NOISE_AMPLITUDE: 25
-  POINTS: false
-  WIREFRAME: true
-  POLY_DETAIL: 5
-  PLANET: {
-    DIAMETER: 1
+OPTIONS = {
+  smoothing: 25
+  detail: 5
+  radius: 0.5
+  
+  noiseOptions: {
+    amplitude: 1.0
+    frequency: 0.4
+    octaves: 1
+    persistence: 0.5
   }
+}
+
+renderOptions = {
+  wireframe: true
 }
 
 # Include FPS and Render stats 
@@ -23,77 +30,108 @@ rendererStats.domElement.style.bottom   = '0px'
 renderer = new THREE.WebGLRenderer()
 
 
-# Todo, this object is a temporary solution
+Coral  = Coral  || {}
 
-noiseOptions = {
-  amplitude: 1.0
-  frequency: 0.4
-  octaves: 1
-  persistence: 0.5
-}
+Coral.Blob = (options) ->
+
+  ###
+  # Return a procedurally generated Blob geometry
+  ###
+
+  # Parse the options object
+  @noiseOps = {}
+
+  if options?.smoothing?
+    @smoothing = options.smoothing
+  else
+    @smoothing = 25
+
+  if options?.detail?
+    @detail = options.detail
+  else
+    @detail = 5
+
+  if options?.radius?
+    @radius = options.radius
+  else
+    @radius = 0.5
+
+  if options?.noiseOptions?.amplitude?
+    @noiseOps.amplitude = options.noiseOptions.amplitude
+  else
+    @noiseOps.amplitude = 1.0
+
+  if options?.noiseOptions?.frequency?
+    @noiseOps.frequency = options.noiseOptions.frequency
+  else
+    @noiseOps.frequency = 0.4
+
+  if options?.noiseOptions?.octaves?
+    @noiseOps.octaves = options.noiseOptions.octaves
+  else
+    @noiseOps.octaves = 1
+
+  if options?.noiseOptions?.persistence?
+    @noiseOps.persistence = options.noiseOptions.persistence
+  else
+    @noiseOps.persistence = 0.5
 
 
-complexGeometry = {}
-
-complexGeometry.initiateNoise = (options) ->
-  new FastSimplexNoise(options)
-
-complexGeometry.geometry = (diameter, detail) ->
-  d = diameter
-  c = d * Math.PI
-  r = d / 2
-
-  new THREE.IcosahedronGeometry(d, detail)
-
-complexGeometry.sample = (geometry, noise) -> #double arrow?
-  console.assert(geometry.vertices?)
-  for v, i in geometry.vertices
-    # Incredinote: does the diameter HAVE to resemble the diameter of the actual sphere?
-    e = noise.getSpherical3DNoise( cfg.PLANET.DIAMETER * Math.PI, v.x, v.y, v.z) #TODO: hardcode c
-
-    v.multiplyScalar( 1 + e / cfg.NOISE_AMPLITUDE ) 
-    
-    
-
-  geometry.verticesNeedUpdate = true
+  generateNoise = (options) ->
+    new FastSimplexNoise(options)
 
 
-complexGeometry.new = ->
+  sample = ( geometry, noise ) =>
+    console.assert(geometry.vertices?)
 
-  # Remove existing objects from the scene
+    for v, i in geometry.vertices
+      c = @radius * 2 * Math.PI
+      e = @noise.getSpherical3DNoise( c, v.x, v.y, v.z )
+
+      v.multiplyScalar( 1 + e / @smoothing )
+
+    geometry
+
+
+
+  # Generate a noise field
+  @noise = generateNoise( @noiseOps )
+
+  # Create a base Polyhedron
+  baseGeometry = new THREE.IcosahedronGeometry( @radius * 2, @detail )
+
+  # Sample the noise field using the baseGeometry's vertices
+  sampleGeometry = sample( baseGeometry, @noise )
+
+  # Return sampled geometry
+  sampleGeometry
+
+  
+generate = ->
+  # Test implementation
+
+  # Remove other meshes
   for i in demo.scene.children
     demo.scene.remove(i) if i.type == "Mesh"
-  
-  # Initiate a new noise field
-  noise = complexGeometry.initiateNoise(noiseOptions)
 
-  # Generate base geometry
-  geometry = complexGeometry.geometry(cfg.PLANET.DIAMETER, cfg.POLY_DETAIL)
+  console.log demo.scene
 
-  # Sample noise and distort
-  complexGeometry.sample(geometry, noise)
+  @geometry = Coral.Blob( OPTIONS )
 
-  # Create a new mesh and add to scene
-
-  if cfg.POINTS
-    material = new THREE.PointCloudMaterial { size: 1, sizeAttenuation: false }
-    @mesh = new THREE.PointCloud( geometry, material)
+  if renderOptions.wireframe
+    material = new THREE.MeshBasicMaterial { color: 0xffffff, wireframe: true }
   else
-    if cfg.WIREFRAME
-      material = new THREE.MeshBasicMaterial { color: 0xffffff, wireframe: true }
-    else
-      material = new THREE.MeshPhongMaterial { color: 0xffffff, shading: THREE.FlatShading }
-    @mesh = new THREE.Mesh( geometry, material)
-    
-  
+    material = new THREE.MeshPhongMaterial { color: 0xffffff, shading: THREE.FlatShading }
+
+  @mesh = new THREE.Mesh( @geometry, material )
   @mesh.castShadow = true
   @mesh.receiveShadow = true
+
   demo.scene.add(@mesh)
 
 
 
-
-# The actual boilerplate part
+# Boilerplate part
 demo = Sketch.create({
 
   type: Sketch.WEBGL
@@ -103,9 +141,10 @@ demo = Sketch.create({
   setup: ->
 
     @camera = new THREE.PerspectiveCamera(90, @.width / @.height, 0.01, 400 )
-    @camera.setLens(25, 35)
-    @camera.position.set(0, 0, cfg.PLANET.DIAMETER / 2 + 0.54)
-    @camera.rotation.x = 70 * Math.PI / 180
+    # @camera.setLens(25, 35)
+    @camera.setLens(25, 55)
+    @camera.position.set(0, 0, 2)
+    # @camera.rotation.x = 0 * Math.PI / 180
 
     @light = new THREE.PointLight( 0xffffff )
     @light.position.set(500, 1000,1000) 
@@ -140,9 +179,6 @@ demo = Sketch.create({
   })
 
 
-
-
-
 window.onload = ->
 
   # Append stats indicators to the dom
@@ -152,37 +188,33 @@ window.onload = ->
   gui = new dat.GUI()
 
   # Create the initial mesh
-  complexGeometry.new()
+  generate()
 
   # Set the noise field's options as tunable variables 
-  gui.add(noiseOptions, "amplitude", -10, 1000).onChange( ->
-    complexGeometry.new()
+  gui.add( OPTIONS.noiseOptions, "amplitude", 1, 100).onChange( ->
+    generate()
     )
 
-  gui.add(noiseOptions, "frequency", -10, 100).onChange( ->
-    complexGeometry.new()
+  gui.add( OPTIONS.noiseOptions, "frequency", 0, 10).onChange( ->
+    generate()
     )
 
-  gui.add(noiseOptions, "octaves").onChange( ->
-    complexGeometry.new()
+  gui.add( OPTIONS.noiseOptions, "octaves", 1, 10).onChange( ->
+    generate()
     )
 
-  gui.add(noiseOptions, "persistence", 0.5, 1).onChange( ->
-    complexGeometry.new()
+  gui.add( OPTIONS.noiseOptions, "persistence", 0.5, 5).onChange( ->
+    generate()
     )
 
-  gui.add(cfg, "NOISE_AMPLITUDE", 1, 50).onChange( ->
-    complexGeometry.new()
+  gui.add(OPTIONS, "smoothing", 1, 50).onChange( ->
+    generate()
     )
 
-  gui.add(cfg, "POINTS").onChange( ->
-    complexGeometry.new()
+  gui.add(renderOptions, "wireframe").onChange( ->
+    generate()
     )
 
-  gui.add(cfg, "WIREFRAME").onChange( ->
-    complexGeometry.new()
-    )
-
-  gui.add(cfg, "POLY_DETAIL").onChange( ->
-    complexGeometry.new()
+  gui.add(OPTIONS, "detail").onChange( ->
+    generate()
     )
