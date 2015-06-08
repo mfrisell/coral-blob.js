@@ -1,39 +1,5 @@
 var Coral, OPTIONS, demo, generate, renderOptions, renderer, rendererStats, stats;
 
-OPTIONS = {
-  smoothing: 25,
-  detail: 5,
-  radius: 0.5,
-  noiseOptions: {
-    amplitude: 1.0,
-    frequency: 0.4,
-    octaves: 1,
-    persistence: 0.5
-  }
-};
-
-renderOptions = {
-  wireframe: true
-};
-
-stats = new Stats();
-
-stats.domElement.style.position = 'absolute';
-
-stats.domElement.style.left = '0px';
-
-stats.domElement.style.top = '0px';
-
-rendererStats = new THREEx.RendererStats();
-
-rendererStats.domElement.style.position = 'absolute';
-
-rendererStats.domElement.style.left = '0px';
-
-rendererStats.domElement.style.bottom = '0px';
-
-renderer = new THREE.WebGLRenderer();
-
 Coral = Coral || {};
 
 Coral.Blob = function(options) {
@@ -101,6 +67,40 @@ Coral.Blob = function(options) {
   return sampleGeometry;
 };
 
+OPTIONS = {
+  smoothing: 25,
+  detail: 5,
+  radius: 0.5,
+  noiseOptions: {
+    amplitude: 1.0,
+    frequency: 0.4,
+    octaves: 1,
+    persistence: 0.5
+  }
+};
+
+renderOptions = {
+  wireframe: true
+};
+
+stats = new Stats();
+
+stats.domElement.style.position = 'absolute';
+
+stats.domElement.style.left = '0px';
+
+stats.domElement.style.top = '0px';
+
+rendererStats = new THREEx.RendererStats();
+
+rendererStats.domElement.style.position = 'absolute';
+
+rendererStats.domElement.style.left = '0px';
+
+rendererStats.domElement.style.bottom = '0px';
+
+renderer = new THREE.WebGLRenderer();
+
 generate = function() {
   var i, j, len, material, ref;
   ref = demo.scene.children;
@@ -155,6 +155,7 @@ demo = Sketch.create({
       for (j = 0, len = ref.length; j < len; j++) {
         mesh = ref[j];
         mesh.rotation.x += 0.002;
+        mesh.rotation.y += 0.002;
       }
     }
     renderer.render(this.scene, this.camera);

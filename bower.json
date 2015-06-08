@@ -1,13 +1,16 @@
 {
-  "name": "three-boilerplate",
-  "version": "0.0.1",
+  "name": "coral.blob.js",
+  "version": "0.1.0",
   "authors": [
-    "Matthias De Vriendt (fauxnoir) <devriendt.matthias@gmail.com>"
+    { "name": "fauxnoir", "email": "devriendt.matthias@gmail.com" }
   ],
-  "description": "A simple Three.js boilerplate",
+  "description": "Generate procedural blobs in three.js",
+  "license": "MIT",
   "keywords": [
     "three",
-    "boilerplate"
+    "coral",
+    "blob",
+    "coral.js"
   ],
   "license": "MIT",
   "ignore": [
@@ -23,18 +26,7 @@
     "dat-gui": "~0.5.1",
     "sketch.js": "*",
     "normalize.css": "~3.0.3",
-<<<<<<< Updated upstream
-    "threex.rendererstats": "*"
-=======
+    "threex.rendererstats": "*",
     "fast-simplex-noise": "~0.5.2"
->>>>>>> Stashed changes
-  },
-  "overrides": {
-    "sketch.js": {
-      "main": "bower_components/sketch.js/js/sketch.js"
-    },
-    "dat-gui": {
-      "main": "bower_components/dat-gui/build/dat.gui.js"
-    }
   }
 }

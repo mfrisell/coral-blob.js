@@ -1,35 +1,3 @@
-OPTIONS = {
-  smoothing: 25
-  detail: 5
-  radius: 0.5
-  
-  noiseOptions: {
-    amplitude: 1.0
-    frequency: 0.4
-    octaves: 1
-    persistence: 0.5
-  }
-}
-
-renderOptions = {
-  wireframe: true
-}
-
-# Include FPS and Render stats 
-stats = new Stats()
-stats.domElement.style.position = 'absolute'
-stats.domElement.style.left = '0px'
-stats.domElement.style.top = '0px'
-
-rendererStats = new THREEx.RendererStats()
-rendererStats.domElement.style.position = 'absolute'
-rendererStats.domElement.style.left = '0px'
-rendererStats.domElement.style.bottom   = '0px'
-
-# Generate a WebGLrenderer instance
-renderer = new THREE.WebGLRenderer()
-
-
 Coral  = Coral  || {}
 
 Coral.Blob = (options) ->
@@ -105,6 +73,38 @@ Coral.Blob = (options) ->
 
   # Return sampled geometry
   sampleGeometry
+OPTIONS = {
+  smoothing: 25
+  detail: 5
+  radius: 0.5
+  
+  noiseOptions: {
+    amplitude: 1.0
+    frequency: 0.4
+    octaves: 1
+    persistence: 0.5
+  }
+}
+
+renderOptions = {
+  wireframe: true
+}
+
+# Include FPS and Render stats 
+stats = new Stats()
+stats.domElement.style.position = 'absolute'
+stats.domElement.style.left = '0px'
+stats.domElement.style.top = '0px'
+
+rendererStats = new THREEx.RendererStats()
+rendererStats.domElement.style.position = 'absolute'
+rendererStats.domElement.style.left = '0px'
+rendererStats.domElement.style.bottom   = '0px'
+
+# Generate a WebGLrenderer instance
+renderer = new THREE.WebGLRenderer()
+
+
 
   
 generate = ->
@@ -167,7 +167,7 @@ demo = Sketch.create({
     if @scene.children? && @scene.children.length > 0
       for mesh in @scene.children
         mesh.rotation.x += 0.002
-        # mesh.rotation.y += 0.005
+        mesh.rotation.y += 0.002
       
     renderer.render( @scene, @camera )
 
