@@ -1,5 +1,5 @@
 # coral.blob.js
-Blob.js provides the functionality to generate procedural blob-geometries in three.js. 
+Blob.js provides the functionality to generate random blob-geometries in three.js. 
 
 ![example image](http://matthiasdv.org/cdn/img/example_blob.png "An exemplary image")
 
