@@ -23,7 +23,11 @@
     "dat-gui": "~0.5.1",
     "sketch.js": "*",
     "normalize.css": "~3.0.3",
+<<<<<<< Updated upstream
     "threex.rendererstats": "*"
+=======
+    "fast-simplex-noise": "~0.5.2"
+>>>>>>> Stashed changes
   },
   "overrides": {
     "sketch.js": {
