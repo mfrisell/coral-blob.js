@@ -28,5 +28,6 @@
     "normalize.css": "~3.0.3",
     "threex.rendererstats": "*",
     "fast-simplex-noise": "~0.5.2"
-  }
+  },
+  "main": "build/js/coral.blob.min.js"
 }
