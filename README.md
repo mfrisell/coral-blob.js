@@ -11,13 +11,13 @@ You can install blob.js using the classic script tag:
 ```
 You may also install blob.js using bower:
 ```
-**$** bower install coral.blob.js
+$ bower install coral.blob.js
 ```
 
 # Usage
 Generating a random blob can be done using:
 ```
-**var** blobGeometry = Coral.Blob( { options } );
+var blobGeometry = Coral.Blob( { options } );
 ```
 
 # Options
