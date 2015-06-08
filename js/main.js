@@ -1,10 +1,13 @@
 var cfg, complexGeometry, demo, noiseOptions, renderer, rendererStats, stats;
 
 cfg = {
-  NOISE_AMPLITUDE: 5,
+  NOISE_AMPLITUDE: 25,
   POINTS: false,
   WIREFRAME: true,
-  POLY_DETAIL: 3
+  POLY_DETAIL: 5,
+  PLANET: {
+    DIAMETER: 1
+  }
 };
 
 stats = new Stats();
@@ -27,7 +30,7 @@ renderer = new THREE.WebGLRenderer();
 
 noiseOptions = {
   amplitude: 1.0,
-  frequency: 1.0,
+  frequency: 0.4,
   octaves: 1,
   persistence: 0.5
 };
@@ -52,7 +55,7 @@ complexGeometry.sample = function(geometry, noise) {
   ref = geometry.vertices;
   for (i = j = 0, len = ref.length; j < len; i = ++j) {
     v = ref[i];
-    e = noise.getSpherical3DNoise(1 * Math.PI, v.x, v.y, v.z);
+    e = noise.getSpherical3DNoise(cfg.PLANET.DIAMETER * Math.PI, v.x, v.y, v.z);
     v.multiplyScalar(1 + e / cfg.NOISE_AMPLITUDE);
   }
   return geometry.verticesNeedUpdate = true;
@@ -68,7 +71,7 @@ complexGeometry["new"] = function() {
     }
   }
   noise = complexGeometry.initiateNoise(noiseOptions);
-  geometry = complexGeometry.geometry(1, cfg.POLY_DETAIL);
+  geometry = complexGeometry.geometry(cfg.PLANET.DIAMETER, cfg.POLY_DETAIL);
   complexGeometry.sample(geometry, noise);
   if (cfg.POINTS) {
     material = new THREE.PointCloudMaterial({
@@ -100,8 +103,10 @@ demo = Sketch.create({
   element: renderer.domElement,
   context: renderer.context,
   setup: function() {
-    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
-    this.camera.position.set(0, 0, 4);
+    this.camera = new THREE.PerspectiveCamera(90, this.width / this.height, 0.01, 400);
+    this.camera.setLens(25, 35);
+    this.camera.position.set(0, 0, cfg.PLANET.DIAMETER / 2 + 0.54);
+    this.camera.rotation.x = 70 * Math.PI / 180;
     this.light = new THREE.PointLight(0xffffff);
     this.light.position.set(500, 1000, 1000);
     this.scene = new THREE.Scene();
@@ -146,7 +151,7 @@ window.onload = function() {
   gui.add(noiseOptions, "persistence", 0.5, 1).onChange(function() {
     return complexGeometry["new"]();
   });
-  gui.add(cfg, "NOISE_AMPLITUDE", 1, 10).onChange(function() {
+  gui.add(cfg, "NOISE_AMPLITUDE", 1, 50).onChange(function() {
     return complexGeometry["new"]();
   });
   gui.add(cfg, "POINTS").onChange(function() {
