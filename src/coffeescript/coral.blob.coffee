@@ -54,7 +54,7 @@ Coral.Blob = (options) ->
 
     for v, i in geometry.vertices
       c = @radius * 2 * Math.PI
-      e = @noise.getSpherical3DNoise( c, v.x, v.y, v.z )
+      e = @noise.get3DNoise(v.x, v.y, v.z)
 
       v.multiplyScalar( 1 + e / @smoothing )
 

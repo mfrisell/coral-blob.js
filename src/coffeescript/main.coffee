@@ -66,13 +66,10 @@ demo = Sketch.create({
   setup: ->
 
     @camera = new THREE.PerspectiveCamera(90, @.width / @.height, 0.01, 400 )
-    # @camera.setLens(25, 35)
-    @camera.setLens(25, 55)
-    @camera.position.set(0, 0, 2)
-    # @camera.rotation.x = 0 * Math.PI / 180
+    @camera.setLens(15, 25)
+    @camera.position.set(0, 0, 3)
 
-    @light = new THREE.PointLight( 0xffffff )
-    @light.position.set(500, 1000,1000) 
+    @light = new THREE.HemisphereLight( 0xffeed1, 0x404040, 0.8 )
 
     @scene = new THREE.Scene()
 

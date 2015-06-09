@@ -126,26 +126,6 @@ FastSimplexNoise.prototype.get4DNoise = function (x, y, z, w) {
   return noise / maxAmplitude;
 };
 
-FastSimplexNoise.prototype.getCylindrical2DNoise = function (c, x, y) {
-  var nx = x / c;
-  var r = c / (2 * Math.PI);
-  var rdx = nx * 2 * Math.PI;
-  var a = r * Math.sin(rdx);
-  var b = r * Math.cos(rdx);
-
-  return this.get3DNoise(a, b, y);
-};
-
-FastSimplexNoise.prototype.getCylindrical3DNoise = function (c, x, y, z) {
-  var nx = x / c;
-  var r = c / (2 * Math.PI);
-  var rdx = nx * 2 * Math.PI;
-  var a = r * Math.sin(rdx);
-  var b = r * Math.cos(rdx);
-
-  return this.get4DNoise(a, b, y, z);
-};
-
 FastSimplexNoise.prototype.getRaw2DNoise = function (x, y) {
   var G2        = FastSimplexNoise.G2;
   var dot2      = FastSimplexNoise.dot2D;
@@ -481,45 +461,3 @@ FastSimplexNoise.prototype.getRaw4DNoise = function (x, y, z, w) {
   return 72.3 * (n0 + n1 + n2 + n3 + n4);
 };
 
-FastSimplexNoise.prototype.getSpherical2DNoise = function (c, x, y) {
-  var nx = x / c;
-  var ny = y / c;
-  var rdx = nx * 2 * Math.PI;
-  var rdy = ny * Math.PI;
-  var sinY = Math.sin(rdy + Math.PI);
-  var sinRds = 2 * Math.PI;
-  var a = sinRds * Math.sin(rdx) * sinY;
-  var b = sinRds * Math.cos(rdx) * sinY;
-  var d = sinRds * Math.cos(rdy);
-
-  return this.get3DNoise(a, b, d);
-};
-
-FastSimplexNoise.prototype.getSpherical3DNoise = function (c, x, y, z) {
-  var nx = x / c;
-  var ny = y / c;
-  var rdx = nx * 2 * Math.PI;
-  var rdy = ny * Math.PI;
-  var sinY = Math.sin(rdy + Math.PI);
-  var sinRds = 2 * Math.PI;
-  var a = sinRds * Math.sin(rdx) * sinY;
-  var b = sinRds * Math.cos(rdx) * sinY;
-  var d = sinRds * Math.cos(rdy);
-
-  return this.get4DNoise(a, b, d, z);
-};
-
-// AMD module
-if (typeof define !== 'undefined' && define.amd) {
-  define(function () { return FastSimplexNoise; })
-}
-
-// Common JS
-if (typeof exports !== 'undefined') {
-  exports.FastSimplexNoise = FastSimplexNoise;
-}
-
-// NPM
-if (typeof module !== 'undefined') {
-  module.exports = FastSimplexNoise;
-}

@@ -55,7 +55,7 @@ Coral.Blob = function(options) {
       for (i = j = 0, len = ref4.length; j < len; i = ++j) {
         v = ref4[i];
         c = _this.radius * 2 * Math.PI;
-        e = _this.noise.getSpherical3DNoise(c, v.x, v.y, v.z);
+        e = _this.noise.get3DNoise(v.x, v.y, v.z);
         v.multiplyScalar(1 + e / _this.smoothing);
       }
       return geometry;
@@ -135,10 +135,9 @@ demo = Sketch.create({
   context: renderer.context,
   setup: function() {
     this.camera = new THREE.PerspectiveCamera(90, this.width / this.height, 0.01, 400);
-    this.camera.setLens(25, 55);
-    this.camera.position.set(0, 0, 2);
-    this.light = new THREE.PointLight(0xffffff);
-    this.light.position.set(500, 1000, 1000);
+    this.camera.setLens(15, 25);
+    this.camera.position.set(0, 0, 3);
+    this.light = new THREE.HemisphereLight(0xffeed1, 0x404040, 0.8);
     this.scene = new THREE.Scene();
     return this.scene.add(this.light);
   },

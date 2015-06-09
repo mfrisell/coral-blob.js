@@ -1,0 +1,29 @@
+{
+  "name": "simplexnoise.js",
+  "version": "0.5.3",
+  "authors": [
+    "Josh Forisha <josh@forisha.com>",
+    "Matthias De Vriendt (fauxnoir) <devriendt.matthias@gmail.com>"
+  ],
+  "description": "Generate Simplex Noise",
+  "keywords": [
+    "simplexnoise"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "homepage": "https://github.com/fauxnoir/fast-simplex-noise-js",
+  "_release": "0.5.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.3",
+    "commit": "4b21d33fe9378b0ae87dec56ab8a41c14fa73e6d"
+  },
+  "_source": "git://github.com/fauxnoir/fast-simplex-noise-js.git",
+  "_target": "~0.5.3",
+  "_originalSource": "simplexnoise.js",
+  "_direct": true
+}

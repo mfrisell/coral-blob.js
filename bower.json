@@ -2,7 +2,10 @@
   "name": "coral.blob.js",
   "version": "0.1.0",
   "authors": [
-    { "name": "fauxnoir", "email": "devriendt.matthias@gmail.com" }
+    {
+      "name": "fauxnoir",
+      "email": "devriendt.matthias@gmail.com"
+    }
   ],
   "description": "Generate procedural blobs in three.js",
   "license": "MIT",
@@ -12,7 +15,6 @@
     "blob",
     "coral.js"
   ],
-  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -26,8 +28,10 @@
     "dat-gui": "~0.5.1",
     "sketch.js": "*",
     "normalize.css": "~3.0.3",
-    "threex.rendererstats": "*",
-    "fast-simplex-noise": "~0.5.2"
+    "threex.rendererstats": "*"
   },
-  "main": "build/js/coral.blob.min.js"
+  "main": "build/js/coral.blob.min.js",
+  "devDependencies": {
+    "simplexnoise.js": "~0.5.3"
+  }
 }
