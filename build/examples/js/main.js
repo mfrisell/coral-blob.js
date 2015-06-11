@@ -68,10 +68,9 @@ demo = Sketch.create({
   context: renderer.context,
   setup: function() {
     this.camera = new THREE.PerspectiveCamera(90, this.width / this.height, 0.01, 400);
-    this.camera.setLens(25, 55);
-    this.camera.position.set(0, 0, 2);
-    this.light = new THREE.PointLight(0xffffff);
-    this.light.position.set(500, 1000, 1000);
+    this.camera.setLens(15, 25);
+    this.camera.position.set(0, 0, 3);
+    this.light = new THREE.HemisphereLight(0xffeed1, 0x404040, 0.8);
     this.scene = new THREE.Scene();
     return this.scene.add(this.light);
   },
@@ -125,5 +124,3 @@ window.onload = function() {
     return generate();
   });
 };
-
-//# sourceMappingURL=main.js.map

@@ -66,5 +66,3 @@ Coral.Blob = function(options) {
   sampleGeometry = sample(baseGeometry, this.noise);
   return sampleGeometry;
 };
-
-//# sourceMappingURL=coral.blob.js.map

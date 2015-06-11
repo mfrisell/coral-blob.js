@@ -59,11 +59,11 @@ module.exports = (grunt) ->
         options: {
           bare: true
           join: true
-          sourceMap: true
+          sourceMap: false
         }
 
         files: {
-          'src/js/coral.blob.js': 'src/coffeescript/coral.blob.coffee'
+          'build/js/coral.blob.js': 'src/coffeescript/coral.blob.coffee'
           'build/examples/js/main.js': 'src/coffeescript/main.coffee'
         }
       }
